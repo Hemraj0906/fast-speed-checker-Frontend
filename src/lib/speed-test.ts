@@ -122,7 +122,7 @@ async function fetchIPFromExternal(signal?: AbortSignal): Promise<CachedIP> {
 
     const data = await res.json();
     console.log("RAW BACKEND RESPONSE:", data);
-    console.log("--------------HHH-------->",data.isp)
+    console.log("--------------HHH-------->", data.isp);
 
     return {
       ip: data.ip || "N/A",
@@ -166,12 +166,10 @@ async function fetchIP(API: string, signal?: AbortSignal) {
       signal: controller.signal,
     });
 
-
     console.log("FINAL RESULT OBJECT:", res);
     if (res.ok) {
       const data = await res.json();
 
-      
       // cachedIP = {
       //   ip: data.ip || "N/A",
       //   isp:
@@ -224,7 +222,7 @@ async function fetchIP(API: string, signal?: AbortSignal) {
 
         cachedIP = {
           ip: data.ip || "N/A",
-          isp: data.org || data.isp || "Unknown ISP",
+          isp: data.isp || data.org || "Unknown ISP",
           city: data.city || "",
           region: data.region || "",
           country: data.country || "",
@@ -279,7 +277,11 @@ export async function runSpeedTest(
   const API = getApiBaseUrl();
   const useExternalBackend = !!API;
 
-  console.log("Speed test - Using external backend:", useExternalBackend, API || "Next.js API");
+  console.log(
+    "Speed test - Using external backend:",
+    useExternalBackend,
+    API || "Next.js API"
+  );
 
   // Create abort controller for cancellation
   const abortController = new AbortController();
@@ -311,7 +313,7 @@ export async function runSpeedTest(
     onProgress({ phase: "ping", progress: 0, currentSpeed: 0 });
 
     const pingResults: number[] = [];
-    
+
     // Make 3 parallel ping requests
     await Promise.all([
       (async () => {
@@ -346,7 +348,7 @@ export async function runSpeedTest(
     // If all ping requests failed, use a simulated value
     let avgPing: number;
     let jitter: number;
-    
+
     if (pingResults.length > 0) {
       avgPing = pingResults.reduce((a, b) => a + b, 0) / pingResults.length;
       jitter = Math.max(...pingResults) - Math.min(...pingResults);
@@ -477,7 +479,7 @@ export async function runSpeedTest(
     // STEP 4: IP FETCH (Fast, parallel with other operations)
     // ============================================
     const ipData = await fetchIP(API, signal);
-    console.log("ipdata-----hh---->",ipData)
+    console.log("ipdata-----hh---->", ipData);
 
     // ============================================
     // FINAL RESULT
@@ -530,4 +532,3 @@ export async function runSpeedTest(
 export function abortSpeedTest() {
   // This will be called by the component to cancel the test
 }
-

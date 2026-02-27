@@ -201,11 +201,10 @@
 //   let ip = "Detecting...";
 //   let isp = "Detecting...";
 //   try {
-         
+
 //     const res = await fetch("https://ip-api.com/json/", {
 //       signal: AbortSignal.timeout(4000),
-      
-    
+
 //     });
 //     if (res.ok) {
 //       const data = await res.json();
@@ -319,7 +318,7 @@
 //         <PhaseLabel phase={phase} />
 
 //         {/* Start / Reset buttons */}
-        
+
 //         {!isRunning && phase !== "complete" && (
 //           // <button
 //           //   onClick={startTest}
@@ -437,8 +436,6 @@
 //   );
 // }
 
-
-
 "use client";
 
 import { useState, useCallback } from "react";
@@ -463,7 +460,7 @@ interface SpeedResult {
   ping: number;
   jitter: number;
   ip: string;
-  org: string;
+  isp: string;
   city?: string;
   region?: string;
   country?: string;
@@ -640,7 +637,7 @@ export function SpeedTest() {
 
           <div className="p-4 border rounded-xl">
             <p className="text-xs text-muted-foreground">ISP</p>
-            <p>{result.org}</p>
+            <p>{result.isp}</p>
           </div>
 
           <div className="p-4 border rounded-xl">

@@ -326,7 +326,7 @@ export function SpeedTestWidget() {
                     <img
                       src={`https://flagcdn.com/w40/${state.result.countryCode.toLowerCase()}.png`}
                       alt={state.result.country || "Country"}
-                      className="w-5 h-3 object-cover rounded-sm"
+                      className="w-5 h-3 object-cover rounded-b-none mt-1"
                     />
                   )}
                 </span>
