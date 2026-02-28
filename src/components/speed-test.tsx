@@ -465,6 +465,7 @@ interface SpeedResult {
   region?: string;
   country?: string;
   server: string;
+  calculationTime?: number;
 }
 
 function GaugeMeter({
@@ -595,16 +596,16 @@ export function SpeedTest() {
           phase === "ping"
             ? "Ping"
             : phase === "upload"
-            ? "Upload Speed"
-            : "Download Speed"
+              ? "Upload Speed"
+              : "Download Speed"
         }
         unit={phase === "ping" ? "ms" : "Mbps"}
         color={
           phase === "ping"
             ? "#f59e0b"
             : phase === "upload"
-            ? "#10b981"
-            : "#3b82f6"
+              ? "#10b981"
+              : "#3b82f6"
         }
       />
 
@@ -629,7 +630,7 @@ export function SpeedTest() {
       )}
 
       {result && (
-        <div className="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="w-full grid grid-cols-1 md:grid-cols-4 gap-4">
           <div className="p-4 border rounded-xl">
             <p className="text-xs text-muted-foreground">IP Address</p>
             <p className="font-mono">{result.ip}</p>
@@ -637,16 +638,23 @@ export function SpeedTest() {
 
           <div className="p-4 border rounded-xl">
             <p className="text-xs text-muted-foreground">ISP</p>
-            <p>{result.isp}</p>
+            <p className="truncate">{result.isp}</p>
           </div>
 
           <div className="p-4 border rounded-xl">
             <p className="text-xs text-muted-foreground">Server</p>
-            <p>{result.server}</p>
+            <p className="truncate">{result.server}</p>
           </div>
 
+          {result.calculationTime !== undefined && (
+            <div className="p-4 border rounded-xl">
+              <p className="text-xs text-muted-foreground">Calculation Time</p>
+              <p>{result.calculationTime}s</p>
+            </div>
+          )}
+
           {(result.city || result.country) && (
-            <div className="p-4 border rounded-xl md:col-span-3">
+            <div className="p-4 border rounded-xl md:col-span-4">
               <p className="text-xs text-muted-foreground">Location</p>
               <p>
                 {result.city}, {result.region} — {result.country}
